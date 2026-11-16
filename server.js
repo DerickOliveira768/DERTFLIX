@@ -1,43 +1,44 @@
-//Importar a biblioteca json-server
+const fs = require('fs');
+const path = require('path');
+const express = require('express');
 const jsonServer = require('json-server');
 
-// Criar um instancia do servidor JsonServer 
-//Essa instancia é usada para criar e configurar o servidor
+const dbPath = path.join(__dirname, 'db.json');
+
+// Garante que o db.json exista com a estrutura inicial
+if (!fs.existsSync(dbPath)) {
+  fs.writeFileSync(
+    dbPath,
+    JSON.stringify({ usuarios: [] }, null, 2),
+    'utf-8'
+  );
+}
+
 const server = jsonServer.create();
+const router = jsonServer.router(dbPath);
+const middlewares = jsonServer.defaults({
+  static: path.join(__dirname, 'public')
+});
 
-//Criar um roteador com o arquivo db.json 
-//O roteador define as rotas do servidor. Ele utiliza um arquivo JSON para gerar a rota.
-const router = jsonServer.router('db.json');
-
-//Funções que são executadas em cada requisição feita com o servidor
-//Importa os padrões JsonServer
-const middlewares = jsonServer.defaults();
-
-//Funções que são executadas em cada requisição feita com o servidor
+// 1. Middlewares padrão do JSON-Server (CORS, logger e pasta /public)
 server.use(middlewares);
 
-//Define a porta em que o servidor irá rodar
-const porta = 3000;
+// 2. Parser de JSON obrigatório para POST e PUT funcionarem no cadastro/edição
+server.use(jsonServer.bodyParser);
 
-//Usa o roteador criado
+// 3. Fallback caso algum arquivo esteja na raiz do projeto
+server.use(express.static(__dirname));
+
+// 4. Rota principal abrindo o index.html
+server.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// 5. Rotas da API (/usuarios) — sempre por último
 server.use(router);
 
-//Importa o módulo express
-const express = require('express');
-
-//Criando variavel instancia do express
-const app = express();
-
-//Configura o servidor para usar
-app.use(express.static('public'));
-
-//Defini a rota principal
-//Enviando o arquivo index.html
-app.get('/', function(req, res) {
-    res.sendFile(__dirname + '/public/index.html');
-})
-
-//Inicia o servidor na porta definida e exibe uma mensagem no console
+// 6. Porta dinâmica (funciona no Render e localmente na porta 3000)
+const porta = process.env.PORT || 3000;
 server.listen(porta, () => {
-    console.log(`JSON SERVER está rodando em http://localhost:${porta}`);
-})
+  console.log(Servidor TER Fanbase rodando em http://localhost:${porta});
+});
