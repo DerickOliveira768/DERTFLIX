@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000/usuarios';
+const API_URL = '3000/usuarios';
 
 // ==========================================================================
 // 1. PÁGINA DE LOGIN (GET)
