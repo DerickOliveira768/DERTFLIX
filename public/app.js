@@ -1,4 +1,4 @@
-const API_URL = '3000/usuarios';
+const API_URL = '/usuarios';
 
 // ==========================================================================
 // 1. PÁGINA DE LOGIN (GET)
@@ -36,7 +36,7 @@ if (loginForm) {
         alert('E-mail ou senha incorretos. Tente novamente.');
       }
     } catch (error) {
-      alert('Não foi possível conectar ao servidor. Verifique se o json-server está rodando na porta 3000.');
+      alert('Não foi possível conectar ao servidor. Tente novamente mais tarde.');
     }
   });
 }
