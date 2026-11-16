@@ -21,10 +21,10 @@ if (loginForm) {
 
       if (usuarioEncontrado) {
         localStorage.setItem('usuarioLogado', JSON.stringify(usuarioEncontrado));
-        alert(`Bem-vindo(a) à Netflix, ${usuarioEncontrado.nome}!`);
+        alert(`Bem-vindo(a) à dertfilx, ${usuarioEncontrado.nome}!`);
 
         if (
-          usuarioEncontrado.email === 'admin@netflix.com' ||
+          usuarioEncontrado.email === 'admin@dertfilx.com' ||
           usuarioEncontrado.perfil === 'admin' ||
           usuarioEncontrado.categoria === 'admin'
         ) {
@@ -87,17 +87,17 @@ function verificarAcessoAdmin() {
   const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
 
   if (!usuarioLogado) {
-    alert('Você precisa entrar na sua conta Netflix para acessar esta página!');
+    alert('Você precisa entrar na sua conta dertfilx para acessar esta página!');
     window.location.href = 'index.html';
     return;
   }
 
   if (
-    usuarioLogado.email !== 'admin@netflix.com' &&
+    usuarioLogado.email !== 'admin@dertfilx.com' &&
     usuarioLogado.perfil !== 'admin' &&
     usuarioLogado.categoria !== 'admin'
   ) {
-    alert('Acesso restrito aos administradores da Netflix.');
+    alert('Acesso restrito aos administradores da dertfilx.');
     window.location.href = 'boas_vindas.html';
   }
 }
@@ -127,7 +127,7 @@ function renderizarTabela(usuarios) {
 
   usuarios.forEach(user => {
     const isAdmin =
-      user.email === 'admin@netflix.com' ||
+      user.email === 'admin@dertfilx.com' ||
       user.perfil === 'admin' ||
       user.categoria === 'admin';
 
@@ -244,7 +244,7 @@ async function deletarUsuario(id) {
     const user = await checkResponse.json();
 
     if (
-      user.email === 'admin@netflix.com' ||
+      user.email === 'admin@dertfilx.com' ||
       user.perfil === 'admin' ||
       user.categoria === 'admin'
     ) {
@@ -271,7 +271,7 @@ async function deletarUsuario(id) {
 // 4. FUNÇÕES GERAIS (MINHA LISTA & LOGOUT)
 // ==========================================================================
 function adicionarAoCarrinho(titulo) {
-  alert(`🎬 "${titulo}" foi adicionado à sua Minha Lista na Netflix!`);
+  alert(`🎬 "${titulo}" foi adicionado à sua Minha Lista na dertfilx!`);
 }
 
 function fazerLogout() {
