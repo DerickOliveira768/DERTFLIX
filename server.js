@@ -40,5 +40,5 @@ server.use(router);
 // 6. Porta dinâmica (funciona no Render e localmente na porta 3000)
 const porta = process.env.PORT || 3000;
 server.listen(porta, () => {
-  console.log(`Servidor TER Fanbase rodando em ${porta}`);
+  console.log(`Servidor Dertflix rodando em ${porta}`);
 });
